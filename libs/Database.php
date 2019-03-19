@@ -17,10 +17,7 @@ class Database {
         }
     }
     /* method fetchs directly all the query inserted by user */
-    public static function check($user, $pass) {
-        if (! Checker::areValidStrings($user)) {
-            return false;
-        }
+    public static function areValidCredentials($user, $pass) {
         $pass = hash("sha256", $pass);
         $query = "select * from users where username='$user';";
         $info = Database::query($query);
@@ -55,9 +52,6 @@ class Database {
     }
 
     public static function existsPrimaryKeyOn($table, $primaryKeyFieldName, $value) {
-        if (! Checker::areValidStrings($table, $primaryKeyFieldName, $value)) {
-            return false;
-        }
         $query = "select * from $table where $primaryKeyFieldName='$value';";
         $info = Database::query($query);
         if ($info) {
